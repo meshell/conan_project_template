@@ -9,6 +9,9 @@ cmake_policy(SET CMP0048 NEW)
 # TODO fill in your project name and version
 project(Cpp_conan_project_template VERSION 0.1.0 LANGUAGES CXX C)
 
+# set the path to the additional cmake modules
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+
 if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
   include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
   set(CONAN_SYSTEM_INCLUDES ON)
@@ -44,13 +47,18 @@ if(UNIX)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Xlinker '--no-as-needed'")
 endif(UNIX)
 
-# set the path to the additional cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 find_package(Boost)
 if(Boost_FOUND)
     add_subdirectory(src)
 endif(Boost_FOUND)
+
+# unit tests require gmock
+find_package(GMock)
+
+if(GMOCK_FOUND)
+    add_subdirectory(tests/unit)
+endif(GMOCK_FOUND)
 
 # add a target to generate API documentation with Doxygen
 set(DOC_DIR ${PROJECT_SOURCE_DIR}/doc CACHE PATH "Documentation directory")
@@ -79,6 +87,16 @@ install(FILES README.md LICENSE
   DESTINATION doc
   COMPONENT doc
 )
+
+# Add some custom target
+if(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND CMAKE_BUILD_TYPE MATCHES Debug)
+    add_custom_target(coverage)
+endif(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND CMAKE_BUILD_TYPE MATCHES Debug)
+
+if(TARGET coverage_unittests)
+    add_dependencies(coverage coverage_unittests)
+endif(TARGET coverage_unittests)
+
 
 # Targets for code anyalysis
 # set report and documentation output paths

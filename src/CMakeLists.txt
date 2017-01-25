@@ -13,9 +13,6 @@ set(PROJECTLIB_HEADER_FILES
 
 source_group("Header Files" FILES ${PROJECTLIB_HEADER_FILES})
 
-# set the path to the additional cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/modules)
-
 
 # set default built type to Debug
 if(NOT CMAKE_BUILD_TYPE)
