@@ -1,0 +1,13 @@
+[requires]
+Boost/1.60.0@lasote/stable
+
+[options]
+Boost:shared=False
+Boost:fPIC=True
+
+[generators]
+cmake
+
+[imports]
+bin, *.dll -> ./bin
+lib, *dylib -> ./bin
