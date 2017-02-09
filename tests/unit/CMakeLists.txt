@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
 # set the path to the additional cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/modules)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/modules)
 
 # TODO add your header files here
 set(UNITTEST_HEADER_FILES

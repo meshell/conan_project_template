@@ -9,15 +9,14 @@ cmake_policy(SET CMP0048 NEW)
 # TODO fill in your project name and version
 project(Cpp_conan_project_template VERSION 0.1.0 LANGUAGES CXX C)
 
-# set the path to the additional cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
-
 if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
   include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
   set(CONAN_SYSTEM_INCLUDES ON)
   conan_basic_setup()
 endif()
 
+# set the path to the additional cmake modules
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 # project name used in doxygen docu
 STRING(REGEX REPLACE "_" " " PROJECT_DOC_NAME ${PROJECT_NAME})
@@ -59,6 +58,13 @@ find_package(GMock)
 if(GMOCK_FOUND)
     add_subdirectory(tests/unit)
 endif(GMOCK_FOUND)
+
+# feature tests require cucumber-cpp (aka cuke)
+find_package(Cuke)
+
+if(CUKE_FOUND AND Boost_FOUND)
+  add_subdirectory(tests/feature)
+endif(CUKE_FOUND AND Boost_FOUND)
 
 # add a target to generate API documentation with Doxygen
 set(DOC_DIR ${PROJECT_SOURCE_DIR}/doc CACHE PATH "Documentation directory")
