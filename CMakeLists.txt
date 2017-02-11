@@ -7,7 +7,7 @@ cmake_policy(SET CMP0048 NEW)
 
 # project name
 # TODO fill in your project name and version
-project(Cpp_conan_project_template VERSION 0.1.0 LANGUAGES CXX C)
+project(Conan_cpp_project_template VERSION 0.1.0 LANGUAGES CXX C)
 
 if(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
   include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
@@ -42,7 +42,6 @@ if(CMAKE_CXX_COMPILER MATCHES ".*clang")
 endif()
 
 if(UNIX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Xlinker '--no-as-needed'")
 endif(UNIX)
 
