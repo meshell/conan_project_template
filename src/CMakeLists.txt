@@ -209,17 +209,6 @@ else()
   )
 endif()
 
-#Install targets
-install(TARGETS ${PROJECT_NAME}
-    RUNTIME DESTINATION bin
-    COMPONENT main
-)
-
-install(FILES ${PROJECTLIB_HEADER_FILES}
-    DESTINATION include/${PROJECT_NAME}
-    COMPONENT headers
-)
-
 #
 # Build library with coverage support
 #

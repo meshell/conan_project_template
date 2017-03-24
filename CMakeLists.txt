@@ -21,9 +21,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/mod
 # project name used in doxygen docu
 STRING(REGEX REPLACE "_" " " PROJECT_DOC_NAME ${PROJECT_NAME})
 
-# project name used for installation
-set(APPLICATION_NAME ${PROJECT_DOC_NAME})
-
 # set default built type to Debug
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -72,27 +69,6 @@ file(MAKE_DIRECTORY
   ${DOC_DIR}
 )
 
-# Doxygen documentation
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/doxygen/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-  add_custom_target(doc
-    ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-    WORKING_DIRECTORY ${DOC_DIR}
-    COMMENT "Generating API documentation with Doxygen." VERBATIM
-  )
-
-  install(DIRECTORY ${DOC_DIR}/html
-    DESTINATION doc
-    COMPONENT doc
-  )
-endif(DOXYGEN_FOUND)
-
-install(FILES README.md LICENSE
-  DESTINATION doc
-  COMPONENT doc
-)
-
 # Add some custom target
 if(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND CMAKE_BUILD_TYPE MATCHES Debug)
     add_custom_target(coverage)
@@ -134,5 +110,3 @@ add_custom_target(clean-reports
   ${CMAKE_COMMAND} -E remove_directory ${REPORT_DIR}
   COMMENT "Delete all reports." VERBATIM
 )
-
-include(CMakeInstallation.cmake)
