@@ -147,12 +147,12 @@ if(STEP_SOURCES)
         ${GTEST_LIBRARIES}
     )
 
-    if(UNIX)
+    if(NOT MSVC)
       find_package(Threads) # GTest needs this and it's a static library
       target_link_libraries(cucumber-cpp_wireserver
           ${CMAKE_THREAD_LIBS_INIT}
       )
-    endif(UNIX)
+    endif(NOT MSVC)
   endif(GTEST_FOUND)
 
   #
