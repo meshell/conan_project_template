@@ -147,6 +147,7 @@ if(UNIX AND CMAKE_COMPILER_IS_GNUCXX AND CMAKE_BUILD_TYPE MATCHES Debug)
       )
 
   target_link_libraries(unittests-cov
+      internal::projectlib-cov ${ARGN}
       GMock::GMock
       GMock::Main
       )
